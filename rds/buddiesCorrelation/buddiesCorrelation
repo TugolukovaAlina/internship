@@ -1,0 +1,10 @@
+?????
+
+Problem was if there is influence of neighbors correlation on rds estimator or just the structure of graph matters
+
+I tried with RGG
+
+Conclusion: nothing interesting
+less temperature -> bigger variance, but this does not make sense
+
+?? maybe because RDS estimator... there are degrees etc... 

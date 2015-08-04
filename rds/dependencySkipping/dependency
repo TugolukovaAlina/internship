@@ -1,0 +1,9 @@
+%dependencyJustSkipping
+RGG(200, 0.13) 
+just skipping some node without increasing length of random walk does not improve estimates
+
+%dependencySkipSameSampleSize
+if the sample size is the same, it is better if the samples are not neighbors. the more separated the better
+
+%dependencyJustMoreSamples
+of corse the mmore samples the better

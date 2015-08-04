@@ -1,0 +1,37 @@
+
+numberOfVertices = 1000;
+numberOfEdges = 3000;
+numberOfSamples = 10000;
+alpha = 2;
+graph = randomGraphS(numberOfVertices, numberOfEdges);
+
+cellGraph = graphToCells(graph);
+
+[samples, selectedSamples, numberOfJumps] = rwWithRestarts(graph, numberOfSamples, alpha);
+
+
+[~, pvalue ,~] = chi2gof(samples, 'cdf' ,@(z)unidcdf(z, size));
+if pvalue <= 0.05
+   fprintf('!!! not uniform 0 \n');
+end
+
+[~, pvalue ,~] = chi2gof(samples(1:length(selectedSamples)), 'cdf' ,@(z)unidcdf(z, size));
+if pvalue <= 0.05
+   fprintf('!!! not uniform 1 \n');
+end
+
+[~, pvalue ,~] = chi2gof(samples(1:2:2*length(selectedSamples)), 'cdf' ,@(z)unidcdf(z, size));
+if pvalue <= 0.05
+   fprintf('!!! not uniform 2 \n');
+end
+
+[~, pvalue ,~] = chi2gof(selectedSamples, 'cdf' ,@(z)unidcdf(z, size));
+if pvalue <= 0.05
+   fprintf('!!! not uniform 3 \n');
+end
+
+
+[~, pvalue ,~] = chi2gof(cat(2, samples(1:floo(length(selectedSamples)/2), randi([1 size], 1, length(selectedSamples)/2)), 'cdf' ,@(z)unidcdf(z, size));
+if pvalue <= 0.05
+   fprintf('!!! not uniform 4 \n');
+end

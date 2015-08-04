@@ -1,0 +1,22 @@
+% changingBudget
+GAF;
+C1 = 1;
+C2 = 4;
+
+minBudget = 100;
+stepBudget = 100;
+maxBudget = 10000;
+
+[budget, minK] = linesXY(minBudget, stepBudget, maxBudget);
+i = 1;
+savedSettings = false;
+figure;
+for B = 100:100:5000
+   [minK(i), k, fk] = findKtoSkip2(B, C1, C2, graph, field, 20) ;  
+   subplot(10, 10, i)
+   plot(k, fk)
+   i = i + 1;
+end
+
+figure;
+plot(budget, minK);

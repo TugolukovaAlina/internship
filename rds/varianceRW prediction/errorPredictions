@@ -1,0 +1,17 @@
+% errorPrediction
+
+To be able to predict variance of rw I needed covariance. Here I tried to extract it from Gibbs distribution.
+Does not really work
+
+
+% errorPrediction2,3
+
+I use different formullas form the book and it works
+
+
+% errorPrediction4
+
+I count variance using my version of formula (6.21) for discrete case 
+and also if I skip values
+
+ 

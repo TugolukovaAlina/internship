@@ -1,0 +1,18 @@
+function exportToCSV(graph, field, fileName, fieldsNames)
+% export field and graph to csv file
+
+if graph ~= null
+    nameGRAPH = cat(2, '/user/atuholuk/home/Documents/MATLAB/RW/graphs/graph from files/', fileName, 'GRAPH.csv');
+    csvwrite(nameGRAPH, graph, 0, 0);
+end
+
+
+if field ~= null
+    nameFIELD = cat(2, '/user/atuholuk/home/Documents/MATLAB/RW/graphs/graph from files/', fileName, 'FIELD.csv');
+    if na
+    csvwrite(nameFIELD, fieldsNames, 0, 0);
+    csvwrite(nameFIELD, field, 0, 1);
+end
+
+end
+

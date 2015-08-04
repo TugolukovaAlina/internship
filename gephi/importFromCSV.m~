@@ -1,0 +1,11 @@
+function [graph, field] = importFromCSV(fileName, )
+% export field and graph to csv file
+
+nameGRAPH = cat(2, '/user/atuholuk/home/Documents/MATLAB/RW/graphs/graph from files/', fileName, 'GRAPH.csv');
+nameFIELD = cat(2, '/user/atuholuk/home/Documents/MATLAB/RW/graphs/graph from files/', fileName, 'FIELD.csv');
+
+graph = csvread(nameGRAPH);
+field = csvread(nameFIELD);
+
+end
+

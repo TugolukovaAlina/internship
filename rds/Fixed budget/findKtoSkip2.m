@@ -1,0 +1,104 @@
+function [minK, k, fk] = findKtoSkip2(B, C1, C2, graph, f, maxToSkip)
+% having fixed budget find what k to skip
+%   B : budget
+%   C1: price for step
+%   C2: prive for interview
+% 
+% 
+% P = transMatrRW(graph);
+% pi = degreeDistribution(graph);
+% PI = ones(length(graph), 1)*pi;
+% 
+% maxChain = floor(maxToSkip*B/(maxToSkip*C1 + C2));
+% covDist = zeros(1, maxChain);
+% Pl = eye(length(graph));
+% for l = 0:(maxChain - 1)
+%     covDist(l+1) =  mult(f, ((Pl - PI)*f')' , pi);
+%     Pl = Pl*P;
+% end
+% 
+% % variance like in the book1
+% fk = zeros(1, maxToSkip);
+% 
+% counter = 1;
+% for k = 1:maxToSkip
+%     % in reality I can't take rational n 
+%     %n = floor(B/(k*C1 + C2));
+%     
+%     n = (B/(k*C1 + C2));
+%     % variance
+%     fk(counter) = covDist(1);
+%     for l = 1:(n-1)
+%        fk(counter) = fk(counter) + 2*(n-l)/n*covDist(k*(l) + 1);
+%     end     
+%     fk(counter) = fk(counter)/n;
+%     counter = counter + 1;
+% end
+% 
+% k = 0:(maxToSkip-1);
+% % min function
+% [~, index] = min(fk);
+% minK = k(index(1));
+
+
+%-------------------------------
+
+savedSettings = evalin('base', 'savedSettings');
+if savedSettings == false
+    P = transMatrRW(graph);
+    pi = degreeDistribution(graph);
+    D = diag(pi);
+    Pstar = D^(1/2)*P*D^(-1/2);
+    [W, L] = eig(Pstar);
+    %!!!!! in matlab it can be not real, but Pstar is symmetric so it has real
+    %eigenvalues
+    W = real(W);
+    L = real(L);
+    V = (D^(-1/2))*W;
+
+    assignin('base', 'L', L);
+    assignin('base', 'pi', pi);
+    assignin('base', 'V', V);
+    assignin('base', 'P', P);
+    assignin('base', 'savedSettings', true);
+else
+    fprintf('\ntake saved \n');
+    L = evalin('base', 'L');
+    pi = evalin('base', 'pi');
+    V = evalin('base', 'V');
+end
+
+k = 1:maxToSkip;
+fk = zeros(1, maxToSkip);
+
+n = B./(k*C1 + C2);
+
+for j = 1:length(graph)
+    if  ~myIsEqual(L(j, j), 1)
+        l = L(j, j).^k;
+        fk = fk + (1 - l.^2 - 2*l./n + 2*(l.^(n+1))./n )./(1 - l).^2* sum(f .* pi .* V(:, j)')^2;
+        %fk = fk + (1 - l.^2)./(1 - l).^2* sum(f .* pi .* V(:, j)')^2;
+
+    end
+end     
+
+fk = fk./n;
+fk = real(fk);
+
+%fprintf('bias^2 - %i \n', (sum(f .* pi) - mean(f))^2);
+biasSq = (sum(f .* pi) - mean(f))^2;
+
+
+% to get error I need to add bias to variance
+fk = fk + biasSq;
+
+k = 0:(maxToSkip-1);
+% min function
+[~, index] = min(fk);
+minK = k(index(1));
+%-------------------------------
+
+
+
+end
+
