@@ -5,6 +5,7 @@ function [indexProperty, distribution] = chooseProperty(localEnergy, temperature
 
 if temperature == 0
     temperature = 0.000000001;
+    fprintf('here!');
 end
 distribution = exp(-localEnergy/temperature);
 

@@ -12,24 +12,21 @@
 %radius = 0.05;
 %[graph, points] = randomGeometricGraph(200, 0.13);
 %[graph, points] = randomGraph(200, 0.1);
-%[graph, points] = graphPA(200, 1);
-graphFacebook = graphFromCSV;
-graph = graphFacebook;
+[graph, points] = graphPA(200, 1);
+%graph = graphFacebook;
 
 isCon = isConnected(graph)
-properties = 1:10;
+properties = 1:5;
 
 maxT = findTemperature(0.9,  graph, properties);
-temperature = power2temp(maxT, 2);
+temperature = power2temp(maxT, 1.3);
 
 % count global energy in experimentations
-fprintf('\n\n\nenergy1\n');
- datestr(now)
 globEnergy = calculateEmpEnergy(graph, properties, temperature);
- datestr(now)
+
 
 figure
-plot([ 0 temperature], [0 globEnergy], 'b--o', 'LineWidth', 2);
+plot(temperature, globEnergy, 'b--o', 'LineWidth', 2);
 hold on;
 
 % count predicted global energy
@@ -40,15 +37,9 @@ temperature2 = 0:stepT:max(temperature);
 globEnergyPred = calculateExpectedEnergy(graph, properties, temperature2);
 globEnergyPred2 = calculateExpectedEnergy2(graph, properties, temperature2);
 
-fprintf('\n energy2 \n');
- datestr(now)
-plot(temperature2, globEnergyPred, 'r', 'LineWidth', 2);
- datestr(now)
+plot([ 0 temperature2], [0 globEnergyPred], 'r', 'LineWidth', 2);
 hold on;
-fprintf('\n energy3 \n');
- datestr(now)
-plot(temperature2, globEnergyPred2, 'g', 'LineWidth', 2);
- datestr(now)
+plot([ 0 temperature2], [0 globEnergyPred2], 'g', 'LineWidth', 2);
 % hold on;
 % plot([0, temperature2(length(temperature2))], [expectedEnergyOfRC(graph, properties), expectedEnergyOfRC(graph, properties)], 'b');
 % 

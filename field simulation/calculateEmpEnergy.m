@@ -9,9 +9,11 @@ globEnergy = zeros(1, length(temperature));
 
 for i = 1:length(temperature)
     for j = 1:numberOfExperiments
-        field = createField(graph, properties, temperature(i), 20);
+        field = createField(graph, properties, temperature(i), 10);
         globEnergy(i) = globEnergy(i) + computeGlobalEnergy(graph, field);
+        progress(j, 2);
     end
+    progress(i, 2);
 end
 
 globEnergy = globEnergy/numberOfExperiments;

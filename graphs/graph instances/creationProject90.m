@@ -4,10 +4,10 @@
 
 
 workingDir = '/user/atuholuk/home/Documents/MATLAB/RW/graphs/graph instances/';
-graphName = 'Project90_3';
+graphName = 'Project9Now';
 % generate graph
 % generate fields
-Project90GraphField
+%Project90GraphField
 fieldsNames = {'race', 'gender', 'sexWorker', 'pimp', 'sexWorkClient', 'drugDealer', 'drugCook', 'thief', 'retired','housewife', 'disabled', 'unemployed', 'homeless'};
 
 
@@ -17,7 +17,7 @@ C1 = 1;
 C2 = 6;
 maxToSkip = 60;
 
-savedSettings = false; savedSettings2 = false;
+%savedSettings = false; savedSettings2 = false;
 creation
 
 % 

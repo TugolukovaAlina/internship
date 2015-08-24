@@ -3,7 +3,8 @@ function analyzeEstimators (B, C1, C2, graph, field, maxToSkip, nameGraphDir, na
 [minK2, k, fk3]         = findKtoSkip2          (B, C1, C2, graph, field, maxToSkip); minK2
 [minK1, ~, fk1, fk2]    = findKToSkipExperEst2  (B, C1, C2, graph, field, maxToSkip); minK1
 
-figure('Position', [100, 100, 600, 640]);
+%figure('Position', [100, 100, 600, 640]);
+figure('Position', [100, 100, 600, 450]);
 
 plot(k, fk1, 'LineWidth', 2)
 hold on;
@@ -19,13 +20,13 @@ if isequal( unique(field), [0, 1])
 end
  
 
-legend({'sample mean', 'RDS estimator', 'prediction sample mean', 'BW estimator'}, 'Fontsize', 20, 'Location','northoutside');
+%legend({'sample mean', 'RDS estimator', 'prediction sample mean', 'BW estimator'}, 'Fontsize', 20, 'Location','northoutside');
 ylabel('mean squared error', 'Fontsize', 24);
 xlabel('to skip', 'Fontsize', 24);
 
 %save to file
 if nargin == 8
-    fileName = cat(2, nameGraphDir, 'analysis estimators_', nameField);
+    fileName = cat(2, nameGraphDir, 'estimators_', nameField);
     print(fileName,'-djpeg','-r0');
     savefig(cat(2, fileName, '.fig'));
 end

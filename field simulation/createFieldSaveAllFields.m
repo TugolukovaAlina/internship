@@ -21,17 +21,21 @@ for j = 1:numberOfIterations
             energy(k) = computeLocalEnergy(graph, field, index);           
         end
         field(index) = chooseProperty(energy, temperature);
+
         
-        if oldValue ~= field(index)
+% uncomment if you want only different fields
+%        if oldValue ~= field(index)
             fields(c, :) = field;
             c = c + 1;
-        end
+%        end
         %field
     end
 
     
 end
 
-fields = fields(any(fields, 2),:);
+
+% uncomment if you want only different fields
+%fields = fields(any(fields, 2),:);
  
 end

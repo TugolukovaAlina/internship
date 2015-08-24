@@ -61,7 +61,7 @@ for k = 0:(maxToSkip-1)
         
         curNodes =  nodes  (i, 1:(k+1):(k+1)*(mCUR-1) + 1);
         %take only once
-        curNodes = unique(curNodes);
+        %curNodes = unique(curNodes);
         curResponses = field(curNodes);
         curDegrees   = degreesGr(curNodes);
         

@@ -16,7 +16,7 @@ for l = 0:(maxLength-1)
     Pl = Pl*P;
 end
 
-%correlation = covDist/covDist(1);
+%covariance = covariance/covariance(1);
 
 
 end

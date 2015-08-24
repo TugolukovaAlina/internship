@@ -3,14 +3,14 @@
 % chain
  
 % dependencySkipSameSampleSize
-GAF;
+
 realMean = mean(field);
 numberOfWalks = 1000;
 
 %how much to skip
 minSkip = 1;
 stepSkip = 1;
-maxSkip = 100;
+maxSkip = 101;
 
 [lineX, lineY] = linesXY(minSkip, stepSkip, maxSkip);
 
@@ -22,12 +22,13 @@ numberOfSamples = numberInOne*maxSkip;
 responses = zeros(numberOfWalks, numberOfSamples);
 degrees = zeros(numberOfWalks, numberOfSamples);
 estimationMean = zeros(1, numberOfWalks);
-%initialDistr = degreeDistribution(graph);
-%initialDistr = oneNodeDistribution(length(graph));
+meanExper = zeros(numberOfWalks, length(lineX));
+P = transMatrRW(graph);
+initialDistr = degreeDistribution(graph);
 % I perform numberOfWalks times random walk, taking the values of the nodes
-for i = 1:numberOfWalks
-    initialDistr = degreeDistribution(graph);
+for i = 1:numberOfWalks    
     [~, responses(i, :), degrees(i, :)] = takeSamples(initialDistr, P, numberOfSamples, graph, @propertyForSample, field);
+    progress(i, 20);
 end
 
 counter = 1;
@@ -37,16 +38,19 @@ for k = minSkip:stepSkip:maxSkip
     for i = 1:numberOfWalks
         currentResponses = responses(i, 1:k:n);
         currentDegrees = degrees(i, 1:k:n);
-        estimationMean(i) = estimateRDS(currentDegrees, currentResponses);        
+        meanExper(i, counter) = mean(currentResponses);  
     end
-
+    counter = counter + 1;
+    
+%     estimationMean(i) = estimateRDS(currentDegrees, currentResponses);       
 %     [~, ~, ~, ~, errorR2] = statParam(estimationMean, realMean);
 %     lineY(counter) = errorR2; 
-    lineY(counter) = var(estimationMean); 
-    counter = counter + 1; 
+%    lineY(counter) = var(estimationMean); 
+    
 end
-
+lineY = MSE(meanExper, realMean);
 figure;
+lineX = lineX -1;
 plot(lineX, lineY, 'LineWidth', 2, 'Color', 'r');
 xlabel('Number of skipped','FontSize', 18);
 ylabel('Error','FontSize', 18);
